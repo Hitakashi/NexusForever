@@ -9,6 +9,8 @@ namespace NexusForever.Shared.Database.Auth.Model
         public string Email { get; set; }
         public string S { get; set; }
         public string V { get; set; }
+        public uint AuthType { get; set; }
+        public string OtpSecret { get; set; }
         public string GameToken { get; set; }
         public string SessionKey { get; set; }
         public DateTime CreateTime { get; set; }

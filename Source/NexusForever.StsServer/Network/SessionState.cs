@@ -5,6 +5,7 @@
         None,
         Connected,
         LoginStart,
-        KeyData
+        KeyData,
+        SecondaryDone
     }
 }

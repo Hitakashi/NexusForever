@@ -81,6 +81,16 @@ namespace NexusForever.StsServer.Network.Message.Handler
         [MessageHandler("/Auth/LoginFinish", SessionState.None)]
         public static void HandleLoginFinish(StsSession session, ClientLoginFinishMessage loginFinish)
         {
+            // 5 = OTP 8 = Email
+            if (session.Account.AuthType != 0 && session.State != SessionState.SecondaryDone)
+            {
+                session.EnqueueMessageOk(new ServerLoginAuthTypeMessage
+                {
+                    AuthType = session.Account.AuthType,
+                });
+                return;
+            }
+
             session.EnqueueMessageOk(new ServerLoginFinishMessage
             {
                 LocationId = "",
@@ -103,6 +113,19 @@ namespace NexusForever.StsServer.Network.Message.Handler
                     Token = guid.ToString()
                 });
             }));
+        }
+
+        [MessageHandler("/Auth/VerifySecondaryAuth", SessionState.None)]
+        public static void HandleSecondaryAuth(StsSession session, ClientSecondaryAuthMessage secondaryAuth) {
+            // TODO: Check if secondaryAuth is OK, etc.
+            // TODO: Also find out what packet the client can handle on errors
+
+            // we good
+            session.State = SessionState.SecondaryDone;
+            
+            session.EnqueueMessageOk(new ServerSecondaryAuth {
+
+            });
         }
     }
 }

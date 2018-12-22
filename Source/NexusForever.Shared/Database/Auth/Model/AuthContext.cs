@@ -74,6 +74,18 @@ namespace NexusForever.Shared.Database.Auth.Model
                     .HasColumnName("v")
                     .HasColumnType("varchar(512)")
                     .HasDefaultValueSql("''");
+
+                entity.Property(e => e.AuthType)
+                    .IsRequired()
+                    .HasColumnName("authType")
+                    .HasColumnType("int(1)")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.OtpSecret)
+                    .IsRequired()
+                    .HasColumnName("otpSecret")
+                    .HasColumnType("varchar(32)")
+                    .HasDefaultValueSql("''");
             });
 
             modelBuilder.Entity<Server>(entity =>
